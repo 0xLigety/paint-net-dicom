@@ -1,7 +1,4 @@
-﻿using Dicom;
-using Dicom.Imaging;
-using Dicom.IO;
-using PaintDotNet;
+﻿using PaintDotNet;
 using PaintDotNet.Controls;
 using PaintDotNet.Data;
 using PaintDotNet.Imaging;
@@ -13,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dicom;
+using Dicom.Imaging;
+using Dicom.Imaging.Codec.Jpeg;
+
 
 namespace DicomFileTypePlugin
 {
@@ -36,7 +37,7 @@ namespace DicomFileTypePlugin
             }
             catch(Exception e)
             {
-                MessageBox.Show("Problem Importing File. "+ e.ToString());
+                MessageBox.Show("Problem Importing File.\n "+ e.InnerException.ToString());
 
                 System.Drawing.Bitmap b = new System.Drawing.Bitmap(500, 500);
                 return Document.FromImage(b);
@@ -46,7 +47,11 @@ namespace DicomFileTypePlugin
         protected override void OnSave(Document input, Stream output, SaveConfigToken token,
             Surface scratchSurface, ProgressEventHandler callback)
         {
-            RenderArgs ra = new RenderArgs(new Surface(input.Size));
+            using (RenderArgs ra = new RenderArgs(new Surface(input.Size)) {
+
+            
+
+            }
             
         }
     }
